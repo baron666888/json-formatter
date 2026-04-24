@@ -375,3 +375,8 @@ textarea::placeholder {
 .fade-in {
   animation: fadeIn 0.3s ease;
 }
+
+/* Suppress ResizeObserver warning */
+.resize-observer observer {
+  display: none;
+}
