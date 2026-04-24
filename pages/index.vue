@@ -413,6 +413,10 @@ if (typeof window !== 'undefined') {
       </svg>
       {{ t(toastMessage) }}
     </div>
+
+    <footer class="app-footer">
+      {{ t('footer') }}
+    </footer>
   </div>
 </template>
 

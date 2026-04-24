@@ -22,7 +22,8 @@ export const messages = {
     item: 'item',
     empty: 'empty',
     nestedJson: 'nested JSON',
-    language: 'Language'
+    language: 'Language',
+    footer: 'Made with ❤️ and a sprinkle of JSON magic ✨'
   },
   zh: {
     appTitle: 'JSON 格式化工具',
@@ -47,7 +48,8 @@ export const messages = {
     item: '个元素',
     empty: '空',
     nestedJson: '嵌套 JSON',
-    language: '语言'
+    language: '语言',
+    footer: '用 ❤️ 和一点点 JSON 魔法 ✨ 打造'
   },
   ja: {
     appTitle: 'JSON フォーマッター',
@@ -72,7 +74,8 @@ export const messages = {
     item: '個のアイテム',
     empty: '空',
     nestedJson: 'ネストされたJSON',
-    language: '言語'
+    language: '言語',
+    footer: '❤️とJSON魔法✨でお届け 🍣'
   }
 }
 
