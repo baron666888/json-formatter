@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+import { messages, locales, type Locale } from '~/composables/useI18n'
 
+const currentLocale = ref<Locale>('en')
 const inputJson = ref('')
 const outputJson = ref('')
 const errorInfo = ref<{ message: string; line?: number } | null>(null)
@@ -10,6 +12,23 @@ let formatTimeout: ReturnType<typeof setTimeout> | null = null
 let collapseKeyCounter = 0
 
 const hasInput = computed(() => inputJson.value.trim().length > 0)
+
+function t(key: string, count?: number): string {
+  const msg = messages[currentLocale.value]
+  const translation = msg[key as keyof typeof msg]
+  
+  if (Array.isArray(translation)) {
+    return count === 1 ? translation[1] : translation[0]
+  }
+  return translation || key
+}
+
+function setLocale(locale: Locale) {
+  currentLocale.value = locale
+  if (typeof window !== 'undefined') {
+    document.documentElement.lang = locale
+  }
+}
 
 function isValidJson(str: string): boolean {
   try {
@@ -48,13 +67,13 @@ function syntaxHighlightValue(value: any, depth: number = 0): string {
       const formatted = JSON.stringify(parsed, null, 2)
       const key = `collapse-${collapseKeyCounter++}`
       const childCount = countObjectKeys(parsed)
-      const label = childCount > 0 ? `${childCount} ${childCount === 1 ? 'key' : 'keys'}` : 'empty'
+      const label = childCount > 0 ? `${childCount} ${t('keys', childCount)}` : t('empty')
 
       let result = `<span class="json-string">"${escaped.slice(0, 20)}${escaped.length > 20 ? '...' : ''}"</span>`
       result += `<span class="nested-json-wrapper">`
       result += `<span class="json-collapsible nested" data-key="${key}" onclick="toggleCollapse(this)">`
       result += `<span class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`
-      result += `<span class="nested-label">[nested JSON: ${label}]</span>`
+      result += `<span class="nested-label">[${t('nestedJson')}: ${label}]</span>`
       result += `</span>`
       result += `<span class="json-content nested" data-end="${key}">`
       result += `\n${'  '.repeat(depth + 1)}<span class="nested-content">`
@@ -90,7 +109,7 @@ function syntaxHighlightArray(arr: any[], depth: number): string {
   }
 
   const key = `collapse-${collapseKeyCounter++}`
-  const label = `${arr.length} ${arr.length === 1 ? 'item' : 'items'}`
+  const label = `${arr.length} ${t('items', arr.length)}`
 
   let result = `<span class="json-collapsible" data-key="${key}" onclick="toggleCollapse(this)">`
   result += `<span class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`
@@ -121,7 +140,7 @@ function syntaxHighlightObject(obj: Record<string, any>, depth: number): string 
   }
 
   const key = `collapse-${collapseKeyCounter++}`
-  const label = `${keys.length} ${keys.length === 1 ? 'key' : 'keys'}`
+  const label = `${keys.length} ${t('keys', keys.length)}`
 
   let result = `<span class="json-collapsible" data-key="${key}" onclick="toggleCollapse(this)">`
   result += `<span class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`
@@ -213,14 +232,14 @@ async function copyToClipboard() {
     const parsed = JSON.parse(input)
     const formatted = JSON.stringify(parsed, null, 2)
     await navigator.clipboard.writeText(formatted)
-    showToastMessage('Copied to clipboard!')
+    showToastMessage('copied')
   } catch (e: any) {
     errorInfo.value = { message: e.message }
   }
 }
 
-function showToastMessage(msg: string) {
-  toastMessage.value = msg
+function showToastMessage(key: string) {
+  toastMessage.value = key
   showToast.value = true
   setTimeout(() => {
     showToast.value = false
@@ -235,6 +254,10 @@ function expandAll() {
 function collapseAll() {
   const collapsibles = document.querySelectorAll('.json-collapsible:not(.collapsed)')
   collapsibles.forEach(el => el.classList.add('collapsed'))
+}
+
+function changeLocale(newLocale: string) {
+  setLocale(newLocale as Locale)
 }
 
 watch(inputJson, handleInput)
@@ -263,8 +286,16 @@ if (typeof window !== 'undefined') {
           <text x="24" y="32" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="url(#logoGrad)">{ }</text>
         </svg>
       </div>
-      <h1>JSON Formatter</h1>
-      <p>Format, validate and beautify your JSON data</p>
+      <h1>{{ t('appTitle') }}</h1>
+      <p>{{ t('appSubtitle') }}</p>
+      <div class="language-switcher">
+        <label>{{ t('language') }}:</label>
+        <select v-model="currentLocale" @change="changeLocale(currentLocale)">
+          <option v-for="loc in locales" :key="loc.code" :value="loc.code">
+            {{ loc.name }}
+          </option>
+        </select>
+      </div>
     </header>
 
     <main class="main-content">
@@ -278,10 +309,10 @@ if (typeof window !== 'undefined') {
               <line x1="16" y1="17" x2="8" y2="17"/>
               <polyline points="10,9 9,9 8,9"/>
             </svg>
-            Input
+            {{ t('input') }}
           </div>
           <div class="panel-actions">
-            <button class="btn btn-secondary" @click="clearAll" title="Clear">
+            <button class="btn btn-secondary" @click="clearAll" :title="t('clear')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
               </svg>
@@ -292,7 +323,7 @@ if (typeof window !== 'undefined') {
         <textarea
           v-model="inputJson"
           :class="{ error: errorInfo }"
-          placeholder="Paste or type your JSON here..."
+          :placeholder="t('placeholder')"
           spellcheck="false"
         ></textarea>
 
@@ -303,7 +334,7 @@ if (typeof window !== 'undefined') {
             <line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
           <div>
-            <span v-if="errorInfo.line" class="error-line">Line {{ errorInfo.line }}: </span>
+            <span v-if="errorInfo.line" class="error-line">{{ t('line') }} {{ errorInfo.line }}: </span>
             {{ errorInfo.message }}
           </div>
         </div>
@@ -316,7 +347,7 @@ if (typeof window !== 'undefined') {
               <line x1="21" y1="14" x2="3" y2="14"/>
               <line x1="21" y1="18" x2="3" y2="18"/>
             </svg>
-            Format
+            {{ t('format') }}
           </button>
           <button class="btn btn-secondary" @click="compressJson" :disabled="!hasInput">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -325,14 +356,14 @@ if (typeof window !== 'undefined') {
               <line x1="14" y1="10" x2="21" y2="3"/>
               <line x1="3" y1="21" x2="10" y2="14"/>
             </svg>
-            Compress
+            {{ t('compress') }}
           </button>
           <button class="btn btn-success" @click="copyToClipboard" :disabled="!hasInput || errorInfo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
-            Copy
+            {{ t('copy') }}
           </button>
         </div>
       </div>
@@ -344,10 +375,10 @@ if (typeof window !== 'undefined') {
               <polyline points="16,18 22,12 16,6"/>
               <polyline points="8,6 2,12 8,18"/>
             </svg>
-            Output
+            {{ t('output') }}
           </div>
           <div class="panel-actions">
-            <button class="btn btn-secondary" @click="collapseAll" title="Collapse All" :disabled="!outputJson">
+            <button class="btn btn-secondary" @click="collapseAll" :title="t('collapseAll')" :disabled="!outputJson">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="4,14 10,14 10,20"/>
                 <polyline points="20,10 14,10 14,4"/>
@@ -355,7 +386,7 @@ if (typeof window !== 'undefined') {
                 <line x1="3" y1="21" x2="10" y2="14"/>
               </svg>
             </button>
-            <button class="btn btn-secondary" @click="expandAll" title="Expand All" :disabled="!outputJson">
+            <button class="btn btn-secondary" @click="expandAll" :title="t('expandAll')" :disabled="!outputJson">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="15,3 21,3 21,9"/>
                 <polyline points="9,21 3,21 3,15"/>
@@ -369,7 +400,7 @@ if (typeof window !== 'undefined') {
         <div class="output-area">
           <pre v-if="outputJson" v-html="outputJson" class="fade-in"></pre>
           <div v-else class="output-placeholder">
-            Formatted JSON will appear here
+            {{ t('emptyOutput') }}
           </div>
         </div>
       </div>
@@ -380,12 +411,41 @@ if (typeof window !== 'undefined') {
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
         <polyline points="22,4 12,14.01 9,11.01"/>
       </svg>
-      {{ toastMessage }}
+      {{ t(toastMessage) }}
     </div>
   </div>
 </template>
 
 <style>
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.language-switcher label {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.language-switcher select {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: var(--color-text);
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.language-switcher select:hover,
+.language-switcher select:focus {
+  border-color: var(--color-primary);
+}
+
 .json-collapsible {
   position: relative;
   cursor: pointer;
