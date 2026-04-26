@@ -399,9 +399,59 @@ textarea::placeholder {
 /* Footer */
 .app-footer {
   text-align: center;
-  padding: 1rem 0 0.5rem;
-  color: var(--color-text-secondary);
-  font-size: 0.85rem;
-  opacity: 0.7;
+  padding: 0.75rem 0 0.25rem;
   flex-shrink: 0;
+}
+
+.footer-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+}
+
+.stat-item svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+}
+
+.stat-label {
+  opacity: 0.75;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.88rem;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-color);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  opacity: 0.65;
+}
+
+.footer-sep {
+  opacity: 0.5;
 }

@@ -3,41 +3,41 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/@vue/shared/dist/shared.cjs.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/defu/dist/defu.mjs';
-import destr, { destr as destr$1 } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/destr/dist/index.mjs';
-import { snakeCase } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/devalue/index.js';
-import { isVNode, isRef, toValue } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/vue/index.mjs';
-import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unhead/dist/plugins.mjs';
-import { createHooks } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/@vue/shared/dist/shared.cjs.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/defu/dist/defu.mjs';
+import destr, { destr as destr$1 } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/destr/dist/index.mjs';
+import { snakeCase } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/devalue/index.js';
+import { isVNode, isRef, toValue } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/vue/index.mjs';
+import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unhead/dist/plugins.mjs';
+import { createHooks } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/errx/dist/index.js';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import { getContext } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/errx/dist/index.js';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://D:/workspace/webstorm/workspace/json-formatter/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://D:/work/webstorm/workspace/json-formatter/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"D:/workspace/webstorm/workspace/json-formatter/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"D:/work/webstorm/workspace/json-formatter/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -49,11 +49,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/workspace/webstorm/workspace/json-formatter","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/workspace/webstorm/workspace/json-formatter/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/workspace/webstorm/workspace/json-formatter/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/workspace/webstorm/workspace/json-formatter/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/workspace/webstorm/workspace/json-formatter/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/work/webstorm/workspace/json-formatter","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/work/webstorm/workspace/json-formatter/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/work/webstorm/workspace/json-formatter/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/work/webstorm/workspace/json-formatter/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/work/webstorm/workspace/json-formatter/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -2010,7 +2010,7 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const rootDir = "D:/workspace/webstorm/workspace/json-formatter";
+const rootDir = "D:/work/webstorm/workspace/json-formatter";
 
 const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg?id=1"}],"style":[],"script":[],"noscript":[],"title":"JSON Formatter"};
 
@@ -2035,7 +2035,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _sMkl6CzWtMPftzMPu8E53dkwBWotKGCxuQAsLx_Gc = (nitroApp) => {
+const _0_puMs_LQwrDB15Hq2uCdlZ8ctQzabVhKDSqxshr8iE = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2109,26 +2109,11 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _sMkl6CzWtMPftzMPu8E53dkwBWotKGCxuQAsLx_Gc,
+  _0_puMs_LQwrDB15Hq2uCdlZ8ctQzabVhKDSqxshr8iE,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
-const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1a085-XHVSRamNTc36xbnA/ONnAKqPK/E\"",
-    "mtime": "2026-04-24T02:00:52.600Z",
-    "size": 106629,
-    "path": "index.mjs"
-  },
-  "/index.mjs.map": {
-    "type": "application/json",
-    "etag": "\"6a1ae-dFV4qwxYKTeEshgEKscHZf8qQ2E\"",
-    "mtime": "2026-04-24T02:00:52.599Z",
-    "size": 434606,
-    "path": "index.mjs.map"
-  }
-};
+const assets = {};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2153,7 +2138,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _2hYYPk = eventHandler((event) => {
+const _AsDGLA = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2295,9 +2280,9 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
-const getServerEntry = () => import('file://D:/workspace/webstorm/workspace/json-formatter/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getServerEntry = () => import('file://D:/work/webstorm/workspace/json-formatter/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file://D:/workspace/webstorm/workspace/json-formatter/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://D:/work/webstorm/workspace/json-formatter/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2588,13 +2573,13 @@ async function getIslandContext(event) {
 	};
 }
 
-const _lazy_4_xUMd = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_0cNKjZ = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _2hYYPk, lazy: false, middleware: true, method: undefined },
-  { route: '/__nuxt_error', handler: _lazy_4_xUMd, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _AsDGLA, lazy: false, middleware: true, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_0cNKjZ, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_4_xUMd, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_0cNKjZ, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
