@@ -260,36 +260,12 @@ function changeLocale(newLocale: string) {
   setLocale(newLocale as Locale)
 }
 
-// Visit stats
-const totalVisits = ref(0)
-const todayVisits = ref(0)
-
-function initVisitStats() {
-  if (typeof window === 'undefined') return
-
-  const today = new Date().toISOString().slice(0, 10)
-  const storedTotal = parseInt(localStorage.getItem('vt') || '0')
-  const storedDate = localStorage.getItem('vd') || ''
-  const storedToday = parseInt(localStorage.getItem('vtd') || '0')
-
-  const newTotal = storedTotal + 1
-  const newToday = storedDate === today ? storedToday + 1 : 1
-
-  localStorage.setItem('vt', String(newTotal))
-  localStorage.setItem('vd', today)
-  localStorage.setItem('vtd', String(newToday))
-
-  totalVisits.value = newTotal
-  todayVisits.value = newToday
-}
-
 watch(inputJson, handleInput)
 
 if (typeof window !== 'undefined') {
   ;(window as any).toggleCollapse = function(el: HTMLElement) {
     el.classList.toggle('collapsed')
   }
-  initVisitStats()
 }
 </script>
 
@@ -439,34 +415,9 @@ if (typeof window !== 'undefined') {
     </div>
 
     <footer class="app-footer">
-      <div class="footer-stats">
-        <div class="stat-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          <span class="stat-label">{{ t('totalVisits') }}</span>
-          <span class="stat-value">{{ totalVisits.toLocaleString() }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
-          </svg>
-          <span class="stat-label">{{ t('todayVisits') }}</span>
-          <span class="stat-value">{{ todayVisits.toLocaleString() }}</span>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>{{ t('footer') }}</span>
-        <span class="footer-sep">·</span>
-        <span>{{ t('copyright').replace('{year}', new Date().getFullYear().toString()) }}</span>
-      </div>
+      <span>{{ t('footer') }}</span>
+      <span class="footer-sep">·</span>
+      <span>{{ t('copyright').replace('{year}', new Date().getFullYear().toString()) }}</span>
     </footer>
   </div>
 </template>

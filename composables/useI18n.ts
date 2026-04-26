@@ -24,9 +24,7 @@ export const messages = {
     nestedJson: 'nested JSON',
     language: 'Language',
     footer: 'Made with ❤️ and a sprinkle of JSON magic ✨',
-    copyright: '© {year} JSON Formatter. All rights reserved.',
-    totalVisits: 'Total Visits',
-    todayVisits: 'Today\'s Visits'
+    copyright: '© {year} JSON Formatter. All rights reserved.'
   },
   zh: {
     appTitle: 'JSON 格式化工具',
@@ -53,9 +51,7 @@ export const messages = {
     nestedJson: '嵌套 JSON',
     language: '语言',
     footer: '用 ❤️ 和一点点 JSON 魔法 ✨ 打造',
-    copyright: '© {year} JSON Formatter 版权所有',
-    totalVisits: '累计访问',
-    todayVisits: '今日访问'
+    copyright: '© {year} JSON Formatter 版权所有'
   },
   ja: {
     appTitle: 'JSON フォーマッター',
@@ -82,9 +78,7 @@ export const messages = {
     nestedJson: 'ネストされたJSON',
     language: '言語',
     footer: '❤️とJSON魔法✨でお届け 🍣',
-    copyright: '© {year} JSON Formatter. 全著作権所有。',
-    totalVisits: '総アクセス数',
-    todayVisits: '本日のアクセス'
+    copyright: '© {year} JSON Formatter. 全著作権所有。'
   }
 }
 
