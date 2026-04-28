@@ -415,7 +415,9 @@ if (typeof window !== 'undefined') {
     </div>
 
     <footer class="app-footer">
-      {{ t('footer') }}
+      <span>{{ t('footer') }}</span>
+      <span class="footer-sep">·</span>
+      <span>{{ t('copyright').replace('{year}', new Date().getFullYear().toString()) }}</span>
     </footer>
   </div>
 </template>

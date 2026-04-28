@@ -23,7 +23,8 @@ export const messages = {
     empty: 'empty',
     nestedJson: 'nested JSON',
     language: 'Language',
-    footer: 'Made with ❤️ and a sprinkle of JSON magic ✨'
+    footer: 'Made with ❤️ and a sprinkle of JSON magic ✨',
+    copyright: '© {year} JSON Formatter. All rights reserved.'
   },
   zh: {
     appTitle: 'JSON 格式化工具',
@@ -49,7 +50,8 @@ export const messages = {
     empty: '空',
     nestedJson: '嵌套 JSON',
     language: '语言',
-    footer: '用 ❤️ 和一点点 JSON 魔法 ✨ 打造'
+    footer: '用 ❤️ 和一点点 JSON 魔法 ✨ 打造',
+    copyright: '© {year} JSON Formatter 版权所有'
   },
   ja: {
     appTitle: 'JSON フォーマッター',
@@ -75,7 +77,8 @@ export const messages = {
     empty: '空',
     nestedJson: 'ネストされたJSON',
     language: '言語',
-    footer: '❤️とJSON魔法✨でお届け 🍣'
+    footer: '❤️とJSON魔法✨でお届け 🍣',
+    copyright: '© {year} JSON Formatter. 全著作権所有。'
   }
 }
 
