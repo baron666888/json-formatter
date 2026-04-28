@@ -34,7 +34,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  width: min(80vw, 1600px);
   height: 100vh;
   margin: 0 auto;
   padding: 1.5rem 2rem 3rem;
@@ -94,6 +94,11 @@ body {
 }
 
 @media (max-width: 900px) {
+  .container {
+    width: min(92vw, 1600px);
+    padding: 1.25rem 1rem 2rem;
+  }
+
   .main-content {
     grid-template-columns: 1fr;
   }
