@@ -271,9 +271,9 @@ if (typeof window !== 'undefined') {
 
 <template>
   <div class="container">
-    <header class="header">
-      <div class="logo-wrapper">
-        <svg class="logo-icon" viewBox="0 0 48 48" fill="none">
+    <header class="header" role="banner">
+      <div class="logo-wrapper" aria-hidden="true">
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" aria-label="JSON Formatter Logo">
           <defs>
             <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#3b82f6"/>
@@ -286,23 +286,31 @@ if (typeof window !== 'undefined') {
           <text x="24" y="32" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="url(#logoGrad)">{ }</text>
         </svg>
       </div>
+      <!-- SEO: Main heading with keyword-rich content -->
       <h1>{{ t('appTitle') }}</h1>
       <p>{{ t('appSubtitle') }}</p>
-      <div class="language-switcher">
-        <label>{{ t('language') }}:</label>
-        <select v-model="currentLocale" @change="changeLocale(currentLocale)">
+      <!-- GEO: Hidden structured description for AI/search engines -->
+      <div class="visually-hidden" aria-hidden="true">
+        <span>JSON Formatter 是一款免费的在线 JSON 验证和格式化工具。</span>
+        <span>主要功能包括：JSON 语法校验、JSON 美化（格式化）、JSON 压缩、</span>
+        <span>语法高亮显示、错误位置定位、嵌套对象展开折叠、以及一键复制功能。</span>
+        <span>支持中英文双语界面，适用于 Web 开发者、API 测试人员和数据处理工程师。</span>
+      </div>
+      <nav class="language-switcher" aria-label="Language selection">
+        <label for="lang-select">{{ t('language') }}:</label>
+        <select id="lang-select" v-model="currentLocale" @change="changeLocale(currentLocale)">
           <option v-for="loc in locales" :key="loc.code" :value="loc.code">
             {{ loc.name }}
           </option>
         </select>
-      </div>
+      </nav>
     </header>
 
-    <main class="main-content">
-      <div class="panel">
+    <main class="main-content" role="main">
+      <section class="panel" aria-labelledby="input-panel-title">
         <div class="panel-header">
-          <div class="panel-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <h2 id="input-panel-title" class="panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14,2 14,8 20,8"/>
               <line x1="16" y1="13" x2="8" y2="13"/>
@@ -310,7 +318,7 @@ if (typeof window !== 'undefined') {
               <polyline points="10,9 9,9 8,9"/>
             </svg>
             {{ t('input') }}
-          </div>
+          </h2>
           <div class="panel-actions">
             <button class="btn btn-secondary" @click="clearAll" :title="t('clear')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -339,9 +347,9 @@ if (typeof window !== 'undefined') {
           </div>
         </div>
 
-        <div class="toolbar">
-          <button class="btn btn-primary" @click="formatJson" :disabled="!hasInput">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="toolbar" role="toolbar" aria-label="JSON formatting tools">
+          <button class="btn btn-primary" @click="formatJson" :disabled="!hasInput" aria-label="格式化 JSON" title="格式化 JSON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="21" y1="10" x2="3" y2="10"/>
               <line x1="21" y1="6" x2="3" y2="6"/>
               <line x1="21" y1="14" x2="3" y2="14"/>
@@ -349,8 +357,8 @@ if (typeof window !== 'undefined') {
             </svg>
             {{ t('format') }}
           </button>
-          <button class="btn btn-secondary" @click="compressJson" :disabled="!hasInput">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="btn btn-secondary" @click="compressJson" :disabled="!hasInput" aria-label="压缩 JSON" title="压缩 JSON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="4,14 10,14 10,20"/>
               <polyline points="20,10 14,10 14,4"/>
               <line x1="14" y1="10" x2="21" y2="3"/>
@@ -358,25 +366,25 @@ if (typeof window !== 'undefined') {
             </svg>
             {{ t('compress') }}
           </button>
-          <button class="btn btn-success" @click="copyToClipboard" :disabled="!hasInput || errorInfo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="btn btn-success" @click="copyToClipboard" :disabled="!hasInput || errorInfo" aria-label="复制到剪贴板" title="复制格式化结果">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
             {{ t('copy') }}
           </button>
         </div>
-      </div>
+      </section>
 
-      <div class="panel">
+      <section class="panel" aria-labelledby="output-panel-title">
         <div class="panel-header">
-          <div class="panel-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <h2 id="output-panel-title" class="panel-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="16,18 22,12 16,6"/>
               <polyline points="8,6 2,12 8,18"/>
             </svg>
             {{ t('output') }}
-          </div>
+          </h2>
           <div class="panel-actions">
             <button class="btn btn-secondary" @click="collapseAll" :title="t('collapseAll')" :disabled="!outputJson">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -403,7 +411,7 @@ if (typeof window !== 'undefined') {
             {{ t('emptyOutput') }}
           </div>
         </div>
-      </div>
+      </section>
     </main>
 
     <div :class="['toast', { show: showToast }]">
@@ -414,7 +422,7 @@ if (typeof window !== 'undefined') {
       {{ t(toastMessage) }}
     </div>
 
-    <footer class="app-footer">
+    <footer class="app-footer" role="contentinfo">
       <span>{{ t('footer') }}</span>
       <span class="footer-sep">·</span>
       <span>{{ t('copyright').replace('{year}', new Date().getFullYear().toString()) }}</span>
@@ -423,6 +431,19 @@ if (typeof window !== 'undefined') {
 </template>
 
 <style>
+/* Visually hidden class for SEO/GEO content that should be accessible to search engines and AI */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .language-switcher {
   display: flex;
   align-items: center;
