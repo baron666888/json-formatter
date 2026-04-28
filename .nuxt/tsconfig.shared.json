@@ -1,34 +1,6 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noEmit": true,
-    "skipLibCheck": true,
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
     "paths": {
-      "#imports": [
-        "./types/nitro-imports"
-      ],
-      "~/*": [
-        "../*"
-      ],
-      "@/*": [
-        "../*"
-      ],
-      "~~/*": [
-        "../*"
-      ],
-      "@@/*": [
-        "../*"
-      ],
       "@unhead/vue": [
         "../node_modules/@unhead/vue"
       ],
@@ -80,6 +52,30 @@
       "crossws": [
         "../node_modules/crossws"
       ],
+      "~": [
+        ".."
+      ],
+      "~/*": [
+        "../*"
+      ],
+      "@": [
+        ".."
+      ],
+      "@/*": [
+        "../*"
+      ],
+      "~~": [
+        ".."
+      ],
+      "~~/*": [
+        "../*"
+      ],
+      "@@": [
+        ".."
+      ],
+      "@@/*": [
+        "../*"
+      ],
       "#shared": [
         "../shared"
       ],
@@ -92,39 +88,62 @@
       "#server/*": [
         "../server/*"
       ],
-      "#build": [
-        "./"
+      "#app": [
+        "../node_modules/nuxt/dist/app"
       ],
-      "#build/*": [
-        "./*"
+      "#app/*": [
+        "../node_modules/nuxt/dist/app/*"
       ],
-      "#internal/nuxt/paths": [
-        "../node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
+      "vue-demi": [
+        "../node_modules/nuxt/dist/app/compat/vue-demi"
+      ],
+      "#vue-router": [
+        "../node_modules/vue-router"
       ],
       "#unhead/composables": [
         "../node_modules/nuxt/dist/head/runtime/composables"
+      ],
+      "#imports": [
+        "./imports"
+      ],
+      "#app-manifest": [
+        "./manifest/meta/dev.json"
+      ],
+      "#build": [
+        "."
+      ],
+      "#build/*": [
+        "./*"
       ]
     },
-    "lib": [
-      "esnext",
-      "webworker",
-      "dom.iterable"
-    ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowArbitraryExtensions": true,
+    "strict": true,
     "noUncheckedIndexedAccess": true,
-    "allowArbitraryExtensions": true
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "module": "preserve",
+    "noEmit": true,
+    "types": [],
+    "moduleResolution": "Bundler",
+    "useDefineForClassFields": true,
+    "noImplicitThis": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
-    "./types/nitro-nuxt.d.ts",
-    "../node_modules/runtime/server",
-    "../node_modules/dist/runtime/server",
-    "../server/**/*",
-    "../shared/**/*.d.ts",
-    "./types/nitro.d.ts"
+    "./nuxt.shared.d.ts",
+    "../shared/**/*",
+    "../modules/*/shared/**/*",
+    "../layers/*/shared/**/*",
+    "../*.d.ts",
+    "../layers/*/*.d.ts"
   ],
-  "exclude": [
-    "../node_modules",
-    "../node_modules/nuxt/node_modules",
-    "../node_modules/@nuxt/telemetry/node_modules",
-    "../dist"
-  ]
+  "exclude": []
 }

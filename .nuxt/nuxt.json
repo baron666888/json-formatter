@@ -1,9 +1,9 @@
 {
-  "_hash": "qASUqGRdY-xXiJ13rkV4xsneYiDDlTYOtDy-6-zYbBk",
+  "_hash": "U-oEpIsCLul-CKBzRXbkIu2daI8gOBmksEC6i6EIccc",
   "project": {
     "rootDir": "D:/workspace/webstorm/workspace/json-formatter"
   },
   "versions": {
-    "nuxt": "3.21.2"
+    "nuxt": "4.4.2"
   }
 }
