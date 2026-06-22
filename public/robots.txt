@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://jsonformatter.example.com/sitemap.xml
+Sitemap: https://json.znow-ai.com/sitemap.xml
 
 # Crawl-delay directive (optional, be considerate to the server)
 Crawl-delay: 1

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="200" fill="url(#accent)" opacity="0.05"/>
+  <circle cx="1100" cy="530" r="250" fill="url(#accent)" opacity="0.05"/>
+  <!-- Logo -->
+  <rect x="500" y="140" width="200" height="200" rx="40" fill="url(#accent)" opacity="0.15"/>
+  <rect x="500" y="140" width="200" height="200" rx="40" stroke="url(#accent)" stroke-width="4" fill="none"/>
+  <text x="600" y="270" text-anchor="middle" font-family="'Courier New', monospace" font-size="72" font-weight="700" fill="url(#accent)">{ }</text>
+  <!-- Title -->
+  <text x="600" y="420" text-anchor="middle" font-family="'Arial', sans-serif" font-size="52" font-weight="700" fill="#f8fafc">JSON Formatter</text>
+  <!-- Subtitle -->
+  <text x="600" y="480" text-anchor="middle" font-family="'Arial', sans-serif" font-size="24" fill="#94a3b8">Format, Validate &amp; Beautify JSON Online</text>
+  <!-- URL -->
+  <text x="600" y="560" text-anchor="middle" font-family="'Arial', sans-serif" font-size="18" fill="#64748b">json.znow-ai.com</text>
+</svg>

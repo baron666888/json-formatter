@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { messages, locales, type Locale } from '~/composables/useI18n'
+import { messages, type Locale } from '~/composables/useI18n'
 
-const currentLocale = ref<Locale>('en')
+const currentLocale = inject<Ref<Locale>>('currentLocale', ref('en'))
+const tFn = inject<(key: string, count?: number) => string>('t', (k: string) => k)
+
 const inputJson = ref('')
 const outputJson = ref('')
 const errorInfo = ref<{ message: string; line?: number } | null>(null)
@@ -14,20 +16,7 @@ let collapseKeyCounter = 0
 const hasInput = computed(() => inputJson.value.trim().length > 0)
 
 function t(key: string, count?: number): string {
-  const msg = messages[currentLocale.value]
-  const translation = msg[key as keyof typeof msg]
-  
-  if (Array.isArray(translation)) {
-    return count === 1 ? translation[1] : translation[0]
-  }
-  return translation || key
-}
-
-function setLocale(locale: Locale) {
-  currentLocale.value = locale
-  if (typeof window !== 'undefined') {
-    document.documentElement.lang = locale
-  }
+  return tFn(key, count)
 }
 
 function isValidJson(str: string): boolean {
@@ -256,10 +245,6 @@ function collapseAll() {
   collapsibles.forEach(el => el.classList.add('collapsed'))
 }
 
-function changeLocale(newLocale: string) {
-  setLocale(newLocale as Locale)
-}
-
 watch(inputJson, handleInput)
 
 if (typeof window !== 'undefined') {
@@ -270,43 +255,13 @@ if (typeof window !== 'undefined') {
 </script>
 
 <template>
-  <div class="container">
+  <div class="index-page">
     <header class="header" role="banner">
-      <div class="logo-wrapper" aria-hidden="true">
-        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" aria-label="JSON Formatter Logo">
-          <defs>
-            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#3b82f6"/>
-              <stop offset="50%" stop-color="#8b5cf6"/>
-              <stop offset="100%" stop-color="#10b981"/>
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#logoGrad)" opacity="0.15"/>
-          <rect x="4" y="4" width="40" height="40" rx="10" stroke="url(#logoGrad)" stroke-width="2"/>
-          <text x="24" y="32" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="url(#logoGrad)">{ }</text>
-        </svg>
-      </div>
-      <!-- SEO: Main heading with keyword-rich content -->
       <h1>{{ t('appTitle') }}</h1>
       <p>{{ t('appSubtitle') }}</p>
-      <!-- GEO: Hidden structured description for AI/search engines -->
-      <div class="visually-hidden" aria-hidden="true">
-        <span>JSON Formatter 是一款免费的在线 JSON 验证和格式化工具。</span>
-        <span>主要功能包括：JSON 语法校验、JSON 美化（格式化）、JSON 压缩、</span>
-        <span>语法高亮显示、错误位置定位、嵌套对象展开折叠、以及一键复制功能。</span>
-        <span>支持中英文双语界面，适用于 Web 开发者、API 测试人员和数据处理工程师。</span>
-      </div>
-      <nav class="language-switcher" aria-label="Language selection">
-        <label for="lang-select">{{ t('language') }}:</label>
-        <select id="lang-select" v-model="currentLocale" @change="changeLocale(currentLocale)">
-          <option v-for="loc in locales" :key="loc.code" :value="loc.code">
-            {{ loc.name }}
-          </option>
-        </select>
-      </nav>
     </header>
 
-    <main class="main-content" role="main">
+    <div class="main-content" role="main">
       <section class="panel" aria-labelledby="input-panel-title">
         <div class="panel-header">
           <h2 id="input-panel-title" class="panel-title">
@@ -348,7 +303,7 @@ if (typeof window !== 'undefined') {
         </div>
 
         <div class="toolbar" role="toolbar" aria-label="JSON formatting tools">
-          <button class="btn btn-primary" @click="formatJson" :disabled="!hasInput" aria-label="格式化 JSON" title="格式化 JSON">
+          <button class="btn btn-primary" @click="formatJson" :disabled="!hasInput">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="21" y1="10" x2="3" y2="10"/>
               <line x1="21" y1="6" x2="3" y2="6"/>
@@ -357,7 +312,7 @@ if (typeof window !== 'undefined') {
             </svg>
             {{ t('format') }}
           </button>
-          <button class="btn btn-secondary" @click="compressJson" :disabled="!hasInput" aria-label="压缩 JSON" title="压缩 JSON">
+          <button class="btn btn-secondary" @click="compressJson" :disabled="!hasInput">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <polyline points="4,14 10,14 10,20"/>
               <polyline points="20,10 14,10 14,4"/>
@@ -366,7 +321,7 @@ if (typeof window !== 'undefined') {
             </svg>
             {{ t('compress') }}
           </button>
-          <button class="btn btn-success" @click="copyToClipboard" :disabled="!hasInput || errorInfo" aria-label="复制到剪贴板" title="复制格式化结果">
+          <button class="btn btn-success" @click="copyToClipboard" :disabled="!hasInput || errorInfo">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -412,7 +367,7 @@ if (typeof window !== 'undefined') {
           </div>
         </div>
       </section>
-    </main>
+    </div>
 
     <div :class="['toast', { show: showToast }]">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -421,59 +376,308 @@ if (typeof window !== 'undefined') {
       </svg>
       {{ t(toastMessage) }}
     </div>
-
-    <footer class="app-footer" role="contentinfo">
-      <span>{{ t('footer') }}</span>
-      <span class="footer-sep">·</span>
-      <span>{{ t('copyright').replace('{year}', new Date().getFullYear().toString()) }}</span>
-    </footer>
   </div>
 </template>
 
-<style>
-/* Visually hidden class for SEO/GEO content that should be accessible to search engines and AI */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+<style scoped>
+.index-page {
+  width: min(80vw, 1600px);
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
-.language-switcher {
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.header h1 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #60a5fa 50%, var(--color-success) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .index-page {
+    width: min(92vw, 1600px);
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.panel-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 0.5rem;
 }
 
-.language-switcher label {
-  color: var(--color-text-secondary);
-  font-size: 14px;
+.panel-title svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary);
 }
 
-.language-switcher select {
+.panel-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
   background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  color: #1e293b;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
+  border: 1px solid #d6e0ef;
+  border-radius: 12px;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #0f172a;
+  resize: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow-y: auto;
+}
+
+textarea:focus {
   outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.language-switcher select:hover,
-.language-switcher select:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-.json-collapsible {
+textarea.error {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+textarea::placeholder {
+  color: #94a3b8;
+  opacity: 0.8;
+}
+
+.output-area {
+  flex: 1;
+  min-height: 0;
+  background: #ffffff;
+  border: 1px solid #d6e0ef;
+  border-radius: 12px;
+  padding: 1rem;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.output-area pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.output-placeholder {
+  color: #94a3b8;
+  opacity: 0.8;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.error-message {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.error-message svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.error-line {
+  font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #2563eb 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-secondary:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
+  color: white;
+}
+
+.btn-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #047857;
+  font-weight: 500;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.toolbar .btn {
+  flex: 1;
+  min-width: 120px;
+  justify-content: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* JSON syntax highlighting */
+:deep(.json-key) { color: #1e6f5c; font-weight: 600; }
+:deep(.json-string) { color: #047857; }
+:deep(.json-number) { color: #b45309; }
+:deep(.json-boolean) { color: #be185d; }
+:deep(.json-null) { color: #7c3aed; }
+:deep(.json-bracket) { color: #64748b; }
+
+/* Collapsible JSON */
+:deep(.json-collapsible) {
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -483,11 +687,11 @@ if (typeof window !== 'undefined') {
   transition: background 0.15s ease;
 }
 
-.json-collapsible:hover {
+:deep(.json-collapsible:hover) {
   background: rgba(59, 130, 246, 0.12);
 }
 
-.json-collapsible .toggle-icon {
+:deep(.json-collapsible .toggle-icon) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -500,44 +704,44 @@ if (typeof window !== 'undefined') {
   vertical-align: middle;
 }
 
-.json-collapsible .toggle-icon svg {
+:deep(.json-collapsible .toggle-icon svg) {
   width: 12px;
   height: 12px;
 }
 
-.json-collapsible:hover .toggle-icon {
+:deep(.json-collapsible:hover .toggle-icon) {
   color: #2563eb;
 }
 
-.json-collapsible.collapsed .toggle-icon {
+:deep(.json-collapsible.collapsed .toggle-icon) {
   transform: rotate(-90deg);
 }
 
-.json-collapsible.collapsed:hover .toggle-icon {
+:deep(.json-collapsible.collapsed:hover .toggle-icon) {
   transform: rotate(0deg) scale(1.1) !important;
 }
 
-.json-collapsible .json-collapsed-content {
+:deep(.json-collapsible .json-collapsed-content) {
   display: none;
   color: #64748b;
   font-style: italic;
   font-size: 0.9em;
 }
 
-.json-collapsible.collapsed .json-collapsed-content {
+:deep(.json-collapsible.collapsed .json-collapsed-content) {
   display: inline;
   margin-left: 2px;
 }
 
-.json-collapsible.collapsed + .json-content {
+:deep(.json-collapsible.collapsed + .json-content) {
   display: none;
 }
 
-.json-content {
+:deep(.json-content) {
   display: inline;
 }
 
-.nested-json-wrapper {
+:deep(.nested-json-wrapper) {
   display: block;
   margin-left: 24px;
   border-left: 2px solid rgba(37, 99, 235, 0.25);
@@ -545,20 +749,20 @@ if (typeof window !== 'undefined') {
   margin-top: 4px;
 }
 
-.json-collapsible.nested {
+:deep(.json-collapsible.nested) {
   margin-left: 0;
 }
 
-.json-collapsible.nested .nested-label {
+:deep(.json-collapsible.nested .nested-label) {
   color: #4f46e5;
   font-size: 0.85em;
 }
 
-.json-content.nested {
+:deep(.json-content.nested) {
   display: block;
 }
 
-.json-comma {
+:deep(.json-comma) {
   color: var(--color-text-secondary);
 }
 </style>

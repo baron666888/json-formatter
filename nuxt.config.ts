@@ -2,11 +2,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   app: {
     head: {
-      htmlAttrs: { lang: 'en' },
+      // lang is set dynamically in app.vue based on locale
       title: 'JSON Formatter - 在线 JSON 格式化校验工具 | JSON Validator',
       titleTemplate: '%s',
       link: [
-        { rel: 'canonical', href: 'https://jsonformatter.example.com/' },
+        { rel: 'canonical', href: 'https://json.znow-ai.com/' },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?id=1' }
       ],
@@ -22,23 +22,20 @@ export default defineNuxtConfig({
         { name: 'googlebot', content: 'index, follow' },
         // Open Graph / Facebook
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://jsonformatter.example.com/' },
+        { property: 'og:url', content: 'https://json.znow-ai.com/' },
         { property: 'og:title', content: 'JSON Formatter - 在线 JSON 格式化校验工具' },
         { property: 'og:description', content: '免费的在线 JSON 格式化工具，支持语法高亮、错误定位、嵌套 JSON 展开折叠。无需注册，即开即用。' },
-        { property: 'og:image', content: 'https://jsonformatter.example.com/og-image.png' },
+        { property: 'og:image', content: 'https://json.znow-ai.com/og-image.svg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { property: 'og:locale', content: 'zh_CN' },
         { property: 'og:site_name', content: 'JSON Formatter' },
         // Twitter / X
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:url', content: 'https://jsonformatter.example.com/' },
+        { name: 'twitter:url', content: 'https://json.znow-ai.com/' },
         { name: 'twitter:title', content: 'JSON Formatter - 在线 JSON 格式化校验工具' },
         { name: 'twitter:description', content: '免费的在线 JSON 格式化工具，支持语法高亮、错误定位、嵌套 JSON 展开折叠。' },
-        { name: 'twitter:image', content: 'https://jsonformatter.example.com/og-image.png' },
-        // GEO / AIO (AI Optimization)
-        { name: 'article:published_time', content: '2024-01-01T00:00:00Z' },
-        { name: 'article:modified_time', content: '2024-01-01T00:00:00Z' },
+        { name: 'twitter:image', content: 'https://json.znow-ai.com/og-image.svg' },
         { name: 'generator', content: 'Nuxt 3' }
       ],
       script: [
@@ -51,7 +48,7 @@ export default defineNuxtConfig({
             'name': 'JSON Formatter',
             'alternateName': ['JSON Validator', 'JSON Beautifier', '在线JSON格式化工具'],
             'description': '免费的在线 JSON 格式化工具，支持语法高亮、错误定位、嵌套 JSON 展开折叠功能。',
-            'url': 'https://jsonformatter.example.com/',
+            'url': 'https://json.znow-ai.com/',
             'applicationCategory': 'DeveloperApplication',
             'operatingSystem': 'Any',
             'browserRequirements': 'Requires modern web browser',
@@ -60,13 +57,6 @@ export default defineNuxtConfig({
               'price': '0',
               'priceCurrency': 'USD',
               'availability': 'https://schema.org/InStock'
-            },
-            'aggregateRating': {
-              '@type': 'AggregateRating',
-              'ratingValue': '4.8',
-              'ratingCount': '1250',
-              'bestRating': '5',
-              'worstRating': '1'
             },
             'featureList': [
               'JSON 语法高亮',
@@ -77,7 +67,7 @@ export default defineNuxtConfig({
               '一键复制格式化结果',
               '中英文双语支持'
             ],
-            'screenshot': 'https://jsonformatter.example.com/og-image.png'
+            'screenshot': 'https://json.znow-ai.com/og-image.svg'
           })
         },
         // BreadcrumbList for better SEO
@@ -91,7 +81,7 @@ export default defineNuxtConfig({
                 '@type': 'ListItem',
                 'position': 1,
                 'name': '首页',
-                'item': 'https://jsonformatter.example.com/'
+                'item': 'https://json.znow-ai.com/'
               }
             ]
           })
