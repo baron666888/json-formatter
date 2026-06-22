@@ -5,6 +5,62 @@ import { messages, type Locale } from '~/composables/useI18n'
 const currentLocale = inject<Ref<Locale>>('currentLocale', ref('en'))
 const tFn = inject<(key: string, count?: number) => string>('t', (k: string) => k)
 
+usePageMeta({
+  titleKey: 'appTitle',
+  descKey: 'metaDescHome',
+  t: tFn as (key: string) => string,
+  currentLocale,
+  path: '/'
+})
+
+// Override titleTemplate for homepage to avoid "JSON Formatter - JSON Formatter"
+useHead({
+  titleTemplate: '%s'
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: () => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        'name': 'JSON Formatter',
+        'alternateName': ['JSON Validator', 'JSON Beautifier'],
+        'description': tFn('metaDescHome'),
+        'url': 'https://json.znow-ai.com/',
+        'applicationCategory': 'DeveloperApplication',
+        'operatingSystem': 'Any',
+        'browserRequirements': 'Requires modern web browser',
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD',
+          'availability': 'https://schema.org/InStock'
+        },
+        'featureList': [
+          'JSON syntax highlighting',
+          'JSON formatting and beautification',
+          'JSON compression',
+          'JSON validation with error location',
+          'Nested JSON collapse/expand',
+          'One-click copy'
+        ]
+      })
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: () => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': tFn('navHome'), 'item': 'https://json.znow-ai.com/' }
+        ]
+      })
+    }
+  ]
+})
+
 const inputJson = ref('')
 const outputJson = ref('')
 const errorInfo = ref<{ message: string; line?: number } | null>(null)
@@ -676,7 +732,6 @@ textarea::placeholder {
 :deep(.json-null) { color: #7c3aed; }
 :deep(.json-bracket) { color: #64748b; }
 
-/* Collapsible JSON */
 :deep(.json-collapsible) {
   position: relative;
   cursor: pointer;

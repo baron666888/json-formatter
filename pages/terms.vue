@@ -6,8 +6,28 @@ const currentLocale = inject<Ref<Locale>>('currentLocale', ref('en'))
 const tFn = inject<(key: string) => string>('t', (k: string) => k)
 const t = (key: string) => tFn(key)
 
+usePageMeta({
+  titleKey: 'termsTitle',
+  descKey: 'metaDescTerms',
+  t,
+  currentLocale,
+  path: '/terms'
+})
+
 useHead({
-  title: () => `${t('termsTitle')} - JSON Formatter`
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: () => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': t('navHome'), 'item': 'https://json.znow-ai.com/' },
+          { '@type': 'ListItem', 'position': 2, 'name': t('navTerms'), 'item': 'https://json.znow-ai.com/terms' }
+        ]
+      })
+    }
+  ]
 })
 </script>
 
