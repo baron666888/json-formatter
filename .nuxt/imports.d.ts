@@ -32,3 +32,4 @@ export { setInterval } from '#app/compat/interval';
 export { definePageMeta, PageMeta } from '#app/composables/pages';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { messages, locales, Locale } from '../composables/useI18n';
+export { usePageMeta } from '../composables/usePageMeta';
