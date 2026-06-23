@@ -317,6 +317,8 @@ if (typeof window !== 'undefined') {
       <p>{{ t('appSubtitle') }}</p>
     </header>
 
+    <HorizontalAd />
+
     <div class="main-content" role="main">
       <section class="panel" aria-labelledby="input-panel-title">
         <div class="panel-header">
@@ -424,6 +426,8 @@ if (typeof window !== 'undefined') {
         </div>
       </section>
     </div>
+
+    <InContentAd />
 
     <div :class="['toast', { show: showToast }]">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

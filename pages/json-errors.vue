@@ -71,6 +71,8 @@ useHead({
         <div class="code-block good">{{ t('jsonErrorsS3Good') }}</div>
       </section>
 
+      <InContentAd />
+
       <section class="content-section">
         <h2>{{ t('jsonErrorsS4Title') }}</h2>
         <p>{{ t('jsonErrorsS4Text') }}</p>

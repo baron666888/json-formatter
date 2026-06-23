@@ -66,6 +66,8 @@ useHead({
         <div class="code-block">{{ t('jsonGuideS3Example') }}</div>
       </section>
 
+      <InContentAd />
+
       <section class="content-section">
         <h2>{{ t('jsonGuideS4Title') }}</h2>
         <p>{{ t('jsonGuideS4Text') }}</p>

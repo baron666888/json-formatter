@@ -67,6 +67,8 @@ useHead({
         <p>{{ t('jsonVsXmlS3Text') }}</p>
       </section>
 
+      <InContentAd />
+
       <section class="content-section">
         <h2>{{ t('jsonVsXmlS4Title') }}</h2>
         <p>{{ t('jsonVsXmlS4Text') }}</p>
