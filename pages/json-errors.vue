@@ -105,6 +105,7 @@ useHead({
         <NuxtLink to="/" class="btn btn-primary">{{ t('appTitle') }}</NuxtLink>
       </div>
     </div>
+    <ContentSidebarAd />
   </div>
 </template>
 

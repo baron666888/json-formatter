@@ -87,6 +87,7 @@ useHead({
         <p>{{ t('jsonVsXmlS7Text') }}</p>
       </section>
     </div>
+    <ContentSidebarAd />
   </div>
 </template>
 
