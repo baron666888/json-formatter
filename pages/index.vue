@@ -447,7 +447,6 @@ if (typeof window !== 'undefined') {
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: hidden;
 }
 
 .header {
@@ -537,7 +536,7 @@ if (typeof window !== 'undefined') {
 textarea {
   flex: 1;
   width: 100%;
-  min-height: 0;
+  min-height: 200px;
   background: #ffffff;
   border: 1px solid #d6e0ef;
   border-radius: 12px;
@@ -568,7 +567,7 @@ textarea::placeholder {
 
 .output-area {
   flex: 1;
-  min-height: 0;
+  min-height: 200px;
   background: #ffffff;
   border: 1px solid #d6e0ef;
   border-radius: 12px;
