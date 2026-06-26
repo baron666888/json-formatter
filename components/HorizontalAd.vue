@@ -24,19 +24,10 @@ onMounted(() => {
 
 <style scoped>
 .horizontal-ad {
-  width: min(80vw, 1600px);
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
 }
 
 .horizontal-ad :deep(.adsbygoogle) {
   margin: 0 auto;
-}
-
-@media (max-width: 900px) {
-  .horizontal-ad {
-    width: min(92vw, 1600px);
-    padding: 0 1rem;
-  }
 }
 </style>

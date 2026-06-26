@@ -317,9 +317,12 @@ if (typeof window !== 'undefined') {
       <p>{{ t('appSubtitle') }}</p>
     </header>
 
-    <HorizontalAd />
+    <div class="content-layout">
+      <aside class="side-ad side-ad-left">
+        <HorizontalAd />
+      </aside>
 
-    <div class="main-content" role="main">
+      <div class="main-content" role="main">
       <section class="panel" aria-labelledby="input-panel-title">
         <div class="panel-header">
           <h2 id="input-panel-title" class="panel-title">
@@ -425,9 +428,12 @@ if (typeof window !== 'undefined') {
           </div>
         </div>
       </section>
-    </div>
+      </div>
 
-    <InContentAd />
+      <aside class="side-ad side-ad-right">
+        <InContentAd />
+      </aside>
+    </div>
 
     <div :class="['toast', { show: showToast }]">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -455,6 +461,34 @@ if (typeof window !== 'undefined') {
   flex-shrink: 0;
 }
 
+.content-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.side-ad {
+  flex-shrink: 0;
+  align-self: start;
+  position: sticky;
+  top: 80px;
+}
+
+.side-ad-left {
+  justify-self: end;
+}
+
+.side-ad-right {
+  justify-self: start;
+}
+
+.side-ad :deep(.horizontal-ad) {
+  width: 100%;
+  padding: 0;
+}
+
 .header h1 {
   font-family: var(--font-heading);
   font-size: 2.5rem;
@@ -480,10 +514,18 @@ if (typeof window !== 'undefined') {
   overflow: hidden;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .index-page {
     width: min(92vw, 1600px);
     padding: 1.25rem 1rem 2rem;
+  }
+
+  .content-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side-ad {
+    display: none;
   }
 
   .main-content {
